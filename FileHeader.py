@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: Lime
 # @Date:   2013-10-28 13:39:48
-# @Last Modified by:   qkdreyer
-# @Last Modified time: 2017-08-14 16:48:32
+# @Last Modified by:   cuiweiqiang
+# @Last Modified time: 2018-07-31 19:22:12
 
 import os
 import sys
@@ -222,6 +222,17 @@ def get_user():
             user = output
     return user
 
+def get_email():
+    '''Get email'''
+    output, error = getOutputError(
+        'cd {0} && git status'.format(get_dir_path()))
+
+    if not error:
+        output, error = getOutputError('git config --get user.email')
+        if not error and output:
+            email = output
+    return email
+
 
 def get_project_name():
     '''Get project name'''
@@ -325,8 +336,11 @@ def get_args(syntax_type, options={}):
         args.update({'project_name': get_project_name()})
 
     user = get_user()
+    email = get_email()
     if 'author' not in args:
         args.update({'author': user})
+    if 'email' not in args:
+        args.update({'email': email})
     if 'last_modified_by' not in args:
         args.update({'last_modified_by': user})
 
