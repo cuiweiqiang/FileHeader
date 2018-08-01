@@ -196,7 +196,7 @@
         /*
         Email
         */
-        "email": "email@example.com"
+        // "email": "email@example.com"
 
         // You can add more here......
     },

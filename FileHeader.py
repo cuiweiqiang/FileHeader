@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: Lime
 # @Date:   2013-10-28 13:39:48
-# @Last Modified by:   cuiweiqiang
-# @Last Modified time: 2018-07-31 19:22:12
+# @Last Modified by:   Cui
+# @Last Modified time: 2018-08-01 16:15:57
 
 import os
 import sys
@@ -213,24 +213,25 @@ def get_user():
     '''Get user'''
 
     user = getpass.getuser()
-    output, error = getOutputError(
-        'cd {0} && git status'.format(get_dir_path()))
-
-    if not error:
-        output, error = getOutputError('git config --get user.name')
-        if not error and output:
-            user = output
+    # output, error = getOutputError(
+    #     'cd {0} && git status'.format(get_dir_path()))
+    # print("3-------> ", output, error);
+    # if not error:
+    output, error = getOutputError('git config --get user.name')
+    if not error and output:
+        user = output
     return user
 
 def get_email():
     '''Get email'''
-    output, error = getOutputError(
-        'cd {0} && git status'.format(get_dir_path()))
+    email = ""
+    # output, error = getOutputError(
+    #     'cd {0} && git status'.format(get_dir_path()))
 
-    if not error:
-        output, error = getOutputError('git config --get user.email')
-        if not error and output:
-            email = output
+    # if not error:
+    output, error = getOutputError('git config --get user.email')
+    if not error and output:
+        email = output
     return email
 
 
@@ -315,6 +316,7 @@ def get_args(syntax_type, options={}):
         return c_time, m_time
 
     args = Settings().get('Default')
+    print("1-------> ",args)
     args.update(Settings().get(syntax_type, {}))
 
     format = get_strftime()
@@ -337,6 +339,7 @@ def get_args(syntax_type, options={}):
 
     user = get_user()
     email = get_email()
+    print("2-------> ",user, email)
     if 'author' not in args:
         args.update({'author': user})
     if 'email' not in args:
